@@ -5,6 +5,7 @@ import connectToDB from "./config/db.config.js";
 
 import userRouter from "./routes/user.routes.js";
 import uploadRoute from "./routes/upload.routes.js";
+import wineRouter from "./routes/wine.routes.js";
 
 dotenv.config();
 
@@ -16,6 +17,8 @@ app.use(express.json()); // configuração do servidor para aceitar e receber ar
 app.use("/user", userRouter);
 
 app.use("/upload", uploadRoute);
+
+app.use("/wine", wineRouter); 
 
 connectToDB()
    .then(
