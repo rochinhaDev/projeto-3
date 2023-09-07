@@ -35,7 +35,31 @@ wineRouter.get("/get-wine/:id", async (req, res) => {
   }
 });
 
-//put
+wineRouter.get("/all/category", async (req, res) => {
+  try {
+    const category = req.params.category;
+    const categories = await wineModel.find({ category: category });
+
+    return res.status(200).json(categories);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+});
+
+wineRouter.put("/update/:id"),
+  async (req, res) => {
+    try {
+      const id_wine = req.params.id;
+      const data = req.body;
+      const config = { new: true, runValidators: true };
+      const wine = await wineModel.findByIdAndUpdate(id_wine, data, config);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json(error);
+    }
+  };
+
 //delete
 
 export default wineRouter;
