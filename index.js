@@ -19,16 +19,16 @@ app.use("/user", userRouter);
 
 app.use("/upload", uploadRoute);
 
-app.use("/wine", wineRouter); 
-app.use("/create-pack", packRouter)
+app.use("/wine", wineRouter);
+app.use("/create-pack", packRouter);
 
 connectToDB()
-   .then(
-      app.listen(process.env.PORT, () => {
-         console.log(`Server up and running at port ${process.env.PORT}`);
-      })
-   )
-   .catch((error) => {
-      console.log("Error connecting to database: ", error);
-   });
-   //comentário
+  .then(
+    app.listen(process.env.PORT, () => {
+      console.log(`Server up and running at port ${process.env.PORT}`);
+    })
+  )
+  .catch((error) => {
+    console.log("Error connecting to database: ", error);
+  });
+//comentário

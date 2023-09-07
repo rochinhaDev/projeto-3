@@ -4,7 +4,7 @@ const cpfRegex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
 const userSchema = new Schema(
   {
     name: { type: String, required: true, trim: true },
-    age: { type: Number, required: true, trim: true, min: 18 },
+    age: { type: Number, required: true, min: 18 },
     telephone: {
       type: String,
       required: true,
@@ -39,6 +39,18 @@ const userSchema = new Schema(
       type: String,
       default: "https://cdn.wallpapersafari.com/92/63/wUq2AY.jpg",
     },
+    history_pack: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Pack",
+      },
+    ],
+    history_wine: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Wine",
+      },
+    ],
 
     passwordHash: { type: String, required: true },
   },
