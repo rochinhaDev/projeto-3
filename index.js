@@ -6,6 +6,7 @@ import connectToDB from "./config/db.config.js";
 import userRouter from "./routes/user.routes.js";
 import uploadRoute from "./routes/upload.routes.js";
 import wineRouter from "./routes/wine.routes.js";
+import packRouter from "./routes/pack.routes.js";
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use("/user", userRouter);
 app.use("/upload", uploadRoute);
 
 app.use("/wine", wineRouter); 
+app.use("/create-pack", packRouter)
 
 connectToDB()
    .then(
