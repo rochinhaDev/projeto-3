@@ -111,4 +111,22 @@ userRouter.put("/edit", isAuth, async (req, res) => {
     return res.status(500).json(err);
   }
 });
+//adicionar vinhos no histórico similar a rota apply do projeto findByIdAndUpdate
+//o usuário tem que estar autenticado e a rota é um put
+userRouter.put("/addWine", isAuth, async (req, res) => {
+  try {
+    const id_user = req.auth._id;
+    const id_wine = req.body.id_wine;
+    const addWine = await UserModel.findByIdAndUpdate(
+      id_user,
+      { $push: { history_wine: id_wine } },
+      { new: true, runValidators: true }
+    );
+    return res.status(200).json(addWine);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+})
+
 export default userRouter;
