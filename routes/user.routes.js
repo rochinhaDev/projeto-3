@@ -86,9 +86,10 @@ userRouter.get("/profile", isAuth, async (req, res) => {
   try {
     const id_user = req.auth._id;
 
-    const user = await UserModel.findById(id_user).select("-passwordHash").populate(
-      "history"
-    );
+    const user = await UserModel.findById(id_user)
+      .select("-passwordHash")
+      .populate("history_pack")
+      .populate("history_wine");
 
     return res.status(200).json(user);
   } catch (err) {
@@ -96,7 +97,7 @@ userRouter.get("/profile", isAuth, async (req, res) => {
     return res.status(500).json(err);
   }
 });
-userRouter.put("/edit", isAuth, async (req, res) => {
+userRouter.put("/edit/:_id", isAuth, async (req, res) => {
   try {
     const id_user = req.auth._id;
     const updateUser = await UserModel.findByIdAndUpdate(

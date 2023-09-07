@@ -7,7 +7,7 @@ import UserModel from "../model/user.model.js";
 const packRouter = express.Router();
 
 //criar um pack
-jobRouter.post("/create-pack", isAuth, async (req, res) => {
+packRouter.post("/create-pack", isAuth, async (req, res) => {
    try {
       const form = req.body;
       const id_wine = req.auth._id;
