@@ -10,89 +10,104 @@ const userRouter = express.Router();
 const SALT_ROUNDS = 10; // quão complexo queremos que o salt seja criado || maior o numero MAIOR a demora na criação da hash
 
 userRouter.post("/signup", async (req, res) => {
-   try {
-      const form = req.body;
+  try {
+    const form = req.body;
 
-      console.log(form);
+    console.log(form);
 
-      if (!form.email || !form.password) {
-         throw new Error("Por favor, envie um email e uma senha");
-      }
+    if (!form.email || !form.password) {
+      throw new Error("Por favor, envie um email e uma senha");
+    }
 
-      if (
-         form.password.match(
-            /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/gm
-         ) === false
-      ) {
-         throw new Error(
-            "A senha não preenche os requisitos básicos. 8 caracteres. Maiuscula e minuscula. Numeros e caracteres especiais."
-         );
-      }
+    if (
+      form.password.match(
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/gm
+      ) === false
+    ) {
+      throw new Error(
+        "A senha não preenche os requisitos básicos. 8 caracteres. Maiuscula e minuscula. Numeros e caracteres especiais."
+      );
+    }
 
-      const salt = await bcrypt.genSalt(SALT_ROUNDS);
-      const hashedPassword = await bcrypt.hash(form.password, salt);
+    const salt = await bcrypt.genSalt(SALT_ROUNDS);
+    const hashedPassword = await bcrypt.hash(form.password, salt);
 
-      const user = await UserModel.create({
-         ...form,
-         passwordHash: hashedPassword,
-      });
+    const user = await UserModel.create({
+      ...form,
+      passwordHash: hashedPassword,
+    });
 
-      user.passwordHash = undefined;
+    user.passwordHash = undefined;
 
-      return res.status(201).json(user);
-   } catch (err) {
-      console.log(err);
-      return res.status(500).json(err.message);
-   }
+    return res.status(201).json(user);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err.message);
+  }
 });
 
 userRouter.post("/login", async (req, res) => {
-   try {
-      const form = req.body;
+  try {
+    const form = req.body;
 
-      if (!form.email || !form.password) {
-         throw new Error("Por favor, preencha todos os dados!");
-      }
+    if (!form.email || !form.password) {
+      throw new Error("Por favor, preencha todos os dados!");
+    }
 
-      // procuro o user pelo email dentro do banco de dados
-      const user = await UserModel.findOne({ email: form.email });
+    // procuro o user pelo email dentro do banco de dados
+    const user = await UserModel.findOne({ email: form.email });
 
-      //compare() também retorna TRUE se for igual as senhas e retorna FALSE se a senha não foi igual!!
-      if (await bcrypt.compare(form.password, user.passwordHash)) {
-         //senhas iguais, pode fazer login
+    //compare() também retorna TRUE se for igual as senhas e retorna FALSE se a senha não foi igual!!
+    if (await bcrypt.compare(form.password, user.passwordHash)) {
+      //senhas iguais, pode fazer login
 
-         //gerar um token
-         const token = generateToken(user);
+      //gerar um token
+      const token = generateToken(user);
 
-         user.passwordHash = undefined;
+      user.passwordHash = undefined;
 
-         return res.status(200).json({
-            user: user,
-            token: token,
-         });
-      } else {
-         //senhas diferentes, não pode fazer login
-         throw new Error(
-            "Email ou senha não são válidos. Por favor tenta novamente."
-         );
-      }
-   } catch (err) {
-      console.log(err);
-      return res.status(500).json(err.message);
-   }
+      return res.status(200).json({
+        user: user,
+        token: token,
+      });
+    } else {
+      //senhas diferentes, não pode fazer login
+      throw new Error(
+        "Email ou senha não são válidos. Por favor tenta novamente."
+      );
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err.message);
+  }
 });
 
 userRouter.get("/profile", isAuth, async (req, res) => {
-   try {
-      const id_user = req.auth._id;
+  try {
+    const id_user = req.auth._id;
 
-      const user = await UserModel.findById(id_user).select("-passwordHash");
+    const user = await UserModel.findById(id_user).select("-passwordHash").populate(
+      "history"
+    );
 
-      return res.status(200).json(user);
-   } catch (err) {
-      console.log(err);
-      return res.status(500).json(err);
-   }
+    return res.status(200).json(user);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
 });
-
+userRouter.put("/edit", isAuth, async (req, res) => {
+  try {
+    const id_user = req.auth._id;
+    const updateUser = await UserModel.findByIdAndUpdate(
+      id_user,
+      { ...req.body },
+      { new: true, runValidators: true }
+    );
+    return res.status(200).json(updateUser);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
 export default userRouter;
