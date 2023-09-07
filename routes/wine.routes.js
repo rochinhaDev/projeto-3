@@ -54,6 +54,7 @@ wineRouter.put("/update/:id"),
       const data = req.body;
       const config = { new: true, runValidators: true };
       const wine = await wineModel.findByIdAndUpdate(id_wine, data, config);
+      return res.status(200).json(wine);
     } catch (error) {
       console.log(error);
       return res.status(500).json(error);
