@@ -113,7 +113,7 @@ userRouter.put("/edit", isAuth, async (req, res) => {
 });
 //adicionar vinhos no histórico similar a rota apply do projeto findByIdAndUpdate
 //o usuário tem que estar autenticado e a rota é um put
-userRouter.put("/addWine", isAuth, async (req, res) => {
+userRouter.put("/add-wine-history", isAuth, async (req, res) => {
   try {
     const id_user = req.auth._id;
     const id_wine = req.body.id_wine;
@@ -121,12 +121,58 @@ userRouter.put("/addWine", isAuth, async (req, res) => {
       id_user,
       { $push: { history_wine: id_wine } },
       { new: true, runValidators: true }
-    );
+    ).select("-passwordHash");
     return res.status(200).json(addWine);
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);
   }
-})
+});
+userRouter.put("/remove-wine-history", isAuth, async (req, res) => {
+  try {
+    const id_user = req.auth._id;
+    const id_wine = req.body.id_wine;
+    const deleteWine = await UserModel.findByIdAndUpdate(
+      id_user,
+      { $pull: { history_wine: id_wine } },
+      { new: true, runValidators: true }
+    );
+
+    return res.status(200).json(deleteWine);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
+userRouter.put("/add-pack-history", isAuth, async (req, res) => {
+  try {
+    const id_user = req.auth._id;
+    const id_pack = req.body.id_pack;
+    const addPack = await UserModel.findByIdAndUpdate(
+      id_user,
+      { $push: { history_pack: id_pack } },
+      { new: true, runValidators: true }
+    );
+    return res.status(200).json(addPack);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
+userRouter.put("/delete-pack-history", isAuth, async (req, res) => {
+  try {
+    const id_user = req.auth._id;
+    const id_pack = req.body.id_pack;
+    const deletePack = await UserModel.findByIdAndUpdate(
+      id_user,
+      { $pull: { history_pack: id_pack } },
+      { new: true, runValidators: true }
+    );
+    return res.status(200).json(deletePack);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
 
 export default userRouter;
