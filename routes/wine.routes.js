@@ -1,5 +1,6 @@
 import express from "express";
 import wineModel from "../model/wine.model.js";
+import isAuth from "../middlewares/isAuth.js";
 
 const wineRouter = express.Router();
 
