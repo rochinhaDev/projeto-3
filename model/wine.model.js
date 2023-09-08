@@ -23,6 +23,7 @@ const wineSchema = new Schema(
     brand: { type: String, required: true },
     origin: { type: String, required: true, default:"Inespecificada" },
     price: { type: String, required: true },
+    status: {type: Boolean, default: true}
   },
   { timestamps: true }
 );
