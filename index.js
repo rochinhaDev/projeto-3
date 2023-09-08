@@ -20,7 +20,7 @@ app.use("/user", userRouter);
 app.use("/upload", uploadRoute);
 
 app.use("/wine", wineRouter);
-app.use("/create-pack", packRouter);
+app.use("/packs", packRouter);
 
 connectToDB()
   .then(

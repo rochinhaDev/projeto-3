@@ -43,12 +43,22 @@ const userSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "Pack",
+        status: {
+          type: String,
+          enum: ["Disponivel", "Indisponivel"],
+          required: true,
+        },
       },
     ],
     history_wine: [
       {
         type: Schema.Types.ObjectId,
         ref: "Wine",
+        status: {
+          type: String,
+          enum: ["Disponivel", "Indisponivel"],
+          required: true,
+        },
       },
     ],
 
