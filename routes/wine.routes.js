@@ -27,7 +27,9 @@ wineRouter.get("/all", async (req, res) => {
 
 wineRouter.get("/get-all", isAuth, async (req, res) => {
   try {
-    const allWines = await wineModel.find({active: true});
+    console.log("acessado")
+    const allWines = await wineModel.find({status: true});
+    console.log("vinhos encontrados")
     return res.status(200).json(allWines);
   } catch (error) {
     console.log(error);
