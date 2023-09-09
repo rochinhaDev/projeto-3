@@ -7,7 +7,7 @@ import UserModel from "../model/user.model.js";
 const packRouter = express.Router();
 
 //criar um pack
-packRouter.post("/create-pack", isAuth, async (req, res) => {
+packRouter.post("/create-pack", async (req, res) => {
   try {
     const form = req.body;
     const newPack = await PackModel.create(form);
@@ -79,32 +79,32 @@ packRouter.delete("/delete/:id-pack"),
     }
   };
 
-  packRouter.put("/add-wine-to-pack", isAuth, async (req, res) => {
+  packRouter.put("/add-wine-to-pack", async (req, res) => {
     try {
-      const id_wine = req.auth._id;
+      const id_wine = req.body.id_wine;
       const id_pack = req.body.id_pack;
-      const addPack = await PackModel.findByIdAndUpdate(
-        id_wine,
-        { $push: { history_pack: id_pack } },
+      const addWineToPack = await PackModel.findByIdAndUpdate(
+        id_pack,
+        { $push: { wines: id_wine } },
         { new: true, runValidators: true }
       );
-      return res.status(200).json(addPack);
+      return res.status(200).json(addWineToPack);
     } catch (error) {
       console.log(error);
       return res.status(500).json(error);
     }
   });
 
-  packRouter.put("/delete-wine-from-pack", isAuth, async (req, res) => {
+  packRouter.put("/delete-wine-from-pack", async (req, res) => {
     try {
-      const id_wine = req.auth._id;
+      const id_wine = req.body.id_wine;
       const id_pack = req.body.id_pack;
-      const deletePack = await PackModel.findByIdAndUpdate(
-        id_wine,
-        { $pull: { history_pack: id_pack } },
+      const removeWineFromPack = await PackModel.findByIdAndUpdate(
+        id_pack,
+        { $pull: { wines: id_wine } },
         { new: true, runValidators: true }
       );
-      return res.status(200).json(deletePack);
+      return res.status(200).json(removeWineFromPack);
     } catch (err) {
       console.log(err);
       return res.status(500).json(err);
