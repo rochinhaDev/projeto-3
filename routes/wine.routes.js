@@ -17,7 +17,7 @@ wineRouter.post("/create-wine", async (req, res) => {
 
 wineRouter.get("/all", async (req, res) => {
   try {
-    const allWines = await wineModel.find({active: true});
+    const allWines = await wineModel.find({status: true});
     return res.status(200).json(allWines);
   } catch (error) {
     console.log(error);
