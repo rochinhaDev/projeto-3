@@ -121,8 +121,22 @@ userRouter.put("/add-wine-history", isAuth, async (req, res) => {
       id_user,
       { $push: { history_wine: id_wine } },
       { new: true, runValidators: true }
-    ).select("-passwordHash");
+    )
+      .select("-passwordHash")
+      .populate("history_wine");
     return res.status(200).json(addWine);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
+userRouter.get("/get-history-wine", isAuth, async (req, res) => {
+  try {
+    const id_user = req.auth._id;
+    const history_wine = await UserModel.findById(id_user)
+      .select("history_wine")
+      .populate("history_wine");
+    return res.status(200).json(history_wine);
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);
