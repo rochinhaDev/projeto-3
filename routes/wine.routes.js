@@ -35,7 +35,7 @@ wineRouter.get("/get-all", isAuth, async (req, res) => {
   }
 });
 
-wineRouter.get("/get-wine/:id", async (req, res) => {
+wineRouter.get("/get-wine/:id", isAuth, async (req, res) => {
   try {
     const id_wine = req.params.id;
     const wine = await wineModel.findById(id_wine);
@@ -46,7 +46,7 @@ wineRouter.get("/get-wine/:id", async (req, res) => {
   }
 });
 
-wineRouter.get("/all/:category", async (req, res) => {
+wineRouter.get("/get-all/:category", isAuth, async (req, res) => {
   try {
     const category = req.params.category;
     const categories = await wineModel.find({ category: category });
