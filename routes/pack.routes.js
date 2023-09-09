@@ -19,7 +19,7 @@ packRouter.post("/create-pack", isAuth, async (req, res) => {
   }
 });
 
-packRouter.get("/get-all-auth", async (req, res) => {
+packRouter.get("/all", async (req, res) => {
   try {
     const allPacks = await PackModel.find({ active: true });
     return res.status(200).json(allPacks);
@@ -78,5 +78,37 @@ packRouter.delete("/delete/:id-pack"),
       return res.status(500).json(error);
     }
   };
+
+  packRouter.put("/add-wine-to-pack", isAuth, async (req, res) => {
+    try {
+      const id_wine = req.auth._id;
+      const id_pack = req.body.id_pack;
+      const addPack = await PackModel.findByIdAndUpdate(
+        id_wine,
+        { $push: { history_pack: id_pack } },
+        { new: true, runValidators: true }
+      );
+      return res.status(200).json(addPack);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json(error);
+    }
+  });
+
+  packRouter.put("/delete-wine-from-pack", isAuth, async (req, res) => {
+    try {
+      const id_wine = req.auth._id;
+      const id_pack = req.body.id_pack;
+      const deletePack = await PackModel.findByIdAndUpdate(
+        id_wine,
+        { $pull: { history_pack: id_pack } },
+        { new: true, runValidators: true }
+      );
+      return res.status(200).json(deletePack);
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+  });
 
 export default packRouter;
