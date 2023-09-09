@@ -14,6 +14,7 @@ const packSchema = new Schema(
       ],
       required: true,
     },
+    wines: [{type: Schema.Types.ObjectId, ref: "Wine"}],
     description: { type: String, required: true },
     type: { type: String, enum: ["2 pack", "4 pack", "6 pack"], required: true },
     delivery: { type: String, enum: ["Pick up", "Delivery"], required: true },
