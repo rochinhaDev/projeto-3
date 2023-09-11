@@ -23,7 +23,8 @@ const wineSchema = new Schema(
     brand: { type: String, required: true },
     origin: { type: String, required: true, default:"Inespecificada" },
     price: { type: String, required: true },
-    status: {type: Boolean, default: true}
+    status: {type: Boolean, default: true},
+    photo: { type: String, default: "https://www.corneyandbarrow.com/media/catalog/product/placeholder/default/placeholder-image-base.jpeg"}
   },
   { timestamps: true }
 );
