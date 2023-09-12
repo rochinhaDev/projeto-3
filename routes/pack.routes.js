@@ -21,7 +21,7 @@ packRouter.post("/create-pack", async (req, res) => {
 
 packRouter.get("/all", async (req, res) => {
   try {
-    const allPacks = await PackModel.find({ active: true });
+    const allPacks = await PackModel.find({});
     return res.status(200).json(allPacks);
   } catch (error) {
     console.log(error);
