@@ -31,7 +31,8 @@ packRouter.get("/all", async (req, res) => {
 
 packRouter.get("/get-all", isAuth, async (req, res) => {
   try {
-    const allPacks = await PackModel.find({ active: true });
+    const allPacks = await PackModel.find({});
+    console.log(allPacks);
     return res.status(200).json(allPacks);
   } catch (error) {
     console.log(error);
@@ -79,36 +80,36 @@ packRouter.delete("/delete/:id-pack"),
     }
   };
 
-  packRouter.put("/add-wine-to-pack", async (req, res) => {
-    try {
-      const id_wine = req.body.id_wine;
-      const id_pack = req.body.id_pack;
-      const addWineToPack = await PackModel.findByIdAndUpdate(
-        id_pack,
-        { $push: { wines: id_wine } },
-        { new: true, runValidators: true }
-      );
-      return res.status(200).json(addWineToPack);
-    } catch (error) {
-      console.log(error);
-      return res.status(500).json(error);
-    }
-  });
+packRouter.put("/add-wine-to-pack", async (req, res) => {
+  try {
+    const id_wine = req.body.id_wine;
+    const id_pack = req.body.id_pack;
+    const addWineToPack = await PackModel.findByIdAndUpdate(
+      id_pack,
+      { $push: { wines: id_wine } },
+      { new: true, runValidators: true }
+    );
+    return res.status(200).json(addWineToPack);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+});
 
-  packRouter.put("/delete-wine-from-pack", async (req, res) => {
-    try {
-      const id_wine = req.body.id_wine;
-      const id_pack = req.body.id_pack;
-      const removeWineFromPack = await PackModel.findByIdAndUpdate(
-        id_pack,
-        { $pull: { wines: id_wine } },
-        { new: true, runValidators: true }
-      );
-      return res.status(200).json(removeWineFromPack);
-    } catch (err) {
-      console.log(err);
-      return res.status(500).json(err);
-    }
-  });
+packRouter.put("/delete-wine-from-pack", async (req, res) => {
+  try {
+    const id_wine = req.body.id_wine;
+    const id_pack = req.body.id_pack;
+    const removeWineFromPack = await PackModel.findByIdAndUpdate(
+      id_pack,
+      { $pull: { wines: id_wine } },
+      { new: true, runValidators: true }
+    );
+    return res.status(200).json(removeWineFromPack);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
 
 export default packRouter;
