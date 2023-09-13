@@ -43,7 +43,7 @@ packRouter.get("/get-all", isAuth, async (req, res) => {
 packRouter.get("/get-pack/:id", async (req, res) => {
   try {
     const id_pack = req.params.id;
-    const pack = await PackModel.findById(id_pack);
+    const pack = await PackModel.findById(id_pack).populate("wines");
     return res.status(200).json(pack);
   } catch (error) {
     console.log(error);
