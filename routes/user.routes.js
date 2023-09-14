@@ -120,7 +120,7 @@ userRouter.put("/delete", isAuth, async (req, res) => {
       {
         active: false,
       },
-      { new: true }
+      { new: true, runValidators: true }
     );
     return res.status(200).json(updateUser);
   } catch (err) {
