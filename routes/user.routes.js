@@ -111,12 +111,17 @@ userRouter.put("/edit/:_id", isAuth, async (req, res) => {
     return res.status(500).json(err);
   }
 });
-userRouter.put("/delete/", isAuth, async (req, res) => {
+userRouter.put("/delete", isAuth, async (req, res) => {
   try {
+    console.log(req.auth);
     const id_user = req.auth._id;
-    const updateUser = await UserModel.findByIdAndUpdate(id_user, {
-      active: false,
-    });
+    const updateUser = await UserModel.findByIdAndUpdate(
+      id_user,
+      {
+        active: false,
+      },
+      { new: true }
+    );
     return res.status(200).json(updateUser);
   } catch (err) {
     console.log(err);
