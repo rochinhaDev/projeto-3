@@ -17,7 +17,7 @@ wineRouter.post("/create-wine", async (req, res) => {
 
 wineRouter.get("/all", async (req, res) => {
   try {
-    const allWines = await wineModel.find({status: true});
+    const allWines = await wineModel.find({ status: true });
     return res.status(200).json(allWines);
   } catch (error) {
     console.log(error);
@@ -27,9 +27,9 @@ wineRouter.get("/all", async (req, res) => {
 
 wineRouter.get("/get-all", isAuth, async (req, res) => {
   try {
-    console.log("acessado")
-    const allWines = await wineModel.find({status: true});
-    console.log("vinhos encontrados")
+    console.log("acessado");
+    const allWines = await wineModel.find({ status: true });
+    console.log("vinhos encontrados");
     return res.status(200).json(allWines);
   } catch (error) {
     console.log(error);
@@ -74,20 +74,18 @@ wineRouter.put("/update/:id"),
     }
   };
 
-wineRouter.delete("/delete/:id-wine", async (req, res) => {
+wineRouter.delete("/delete/:id_wine", async (req, res) => {
   try {
     const id_wine = req.params.id_wine;
 
-    const deletedWine = await wineModel.findByIdAndUpdate(
-      id_wine,
-      {active: false}
-    );
+    const deletedWine = await wineModel.findByIdAndUpdate(id_wine, {
+      status: false,
+    });
     return res.status(200).json("Vinho inativado com sucesso");
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
   }
 });
-
 
 export default wineRouter;
