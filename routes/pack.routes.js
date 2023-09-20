@@ -65,20 +65,17 @@ packRouter.put("/update/:id"),
     }
   };
 
-packRouter.delete("/delete/:id-pack"),
-  async (req, res) => {
+packRouter.delete("/delete/:id_pack", async (req, res) => {
     try {
-      const id_pack = req.params.id;
-      const deletedPack = await PackModel.findByIdAndUpdate(id_pack, {
-        active: false,
-      });
-      const config = { new: true, runValidators: true };
+      const id_pack = req.params.id_pack;
+      const deletedPack = await PackModel.findByIdAndDelete(id_pack);
       return res.status(200).json("Pack desativado");
     } catch (error) {
       console.log(error);
       return res.status(500).json(error);
     }
-  };
+  })
+ 
 
 packRouter.put("/add-wine-to-pack", async (req, res) => {
   try {
