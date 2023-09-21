@@ -1,48 +1,48 @@
-# Arquivos de criação do servidor do Projeto 3 da Ironhack
+# Ironhack Project 3 Server Creation Files
 
-Este repositório contém os arquivos necessários para criar o servidor do Projeto 3 da Ironhack. O projeto utiliza as seguintes tecnologias:
+This repository contains the necessary files to create the Ironhack Project 3 server. The project utilizes the following technologies:
 
 - Node.js
 - Express
 - JWT (JSON Web Tokens)
 - Mongoose
 
-## Utilização
+## Usage
 
-Para utilizar este projeto, siga as etapas abaixo:
+To use this project, follow the steps below:
 
-1. Clique no botão "Use this template" para criar um novo repositório com base neste.
+1. Click the "Use this template" button to create a new repository based on this one.
 
-2. Clone o repositório recém-criado usando o comando `git clone URL_DO_SEU_REPOSITORIO` no seu terminal, onde `URL_DO_SEU_REPOSITORIO` é o link para o seu novo repositório.
+2. Clone the newly created repository using the command `git clone YOUR_REPOSITORY_URL` in your terminal, where `YOUR_REPOSITORY_URL` is the link to your new repository.
 
-3. Execute o comando `npm install` no terminal na raiz do projeto para instalar as dependências necessárias.
+3. Run the `npm install` command in the project's root directory in the terminal to install the necessary dependencies.
 
-4. Crie um arquivo `.env` baseado no arquivo `.exemple.env` presente no repositório. Certifique-se de configurar as variáveis de ambiente apropriadas.
+4. Create an `.env` file based on the `.example.env` file present in the repository. Make sure to configure the appropriate environment variables.
 
-5. Para iniciar o servidor, execute no terminal o comando `npm run dev`.
+5. To start the server, run the `npm run dev` command in the terminal.
 
-## Rotas
+## Routes
 
-O servidor inclui as seguintes rotas com operações CRUD completas:
+The server includes the following routes with complete CRUD operations:
 
-1. **Usuário:** Esta rota permite a gestão de usuários, incluindo a criação, leitura, atualização e exclusão de informações de usuário.
+1. **User:** This route allows for user management, including user creation, reading, updating, and deletion of user information.
 
-2. **Vinhos:** Aqui, você pode executar todas as operações CRUD relacionadas a informações sobre vinhos.
+2. **Wines:** Here, you can perform all CRUD operations related to wine information.
 
-3. **Pacotes de Vinhos:** Esta rota lida com operações CRUD para os pacotes de vinhos do projeto, que são coleções de vinhos.
+3. **Wine Packages:** This route handles CRUD operations for the wine packages of the project, which are collections of wines.
 
-4. **Perfil Admin:** A rota do perfil admin permite a gestão completa de perfis de administrador, incluindo a inclusão de vinhos e pacotes de vinhos.
+4. **Admin Profile:** The admin profile route allows complete management of administrator profiles, including the addition of wines and wine packages.
 
-## Participantes do Projeto
+## Project Participants
 
 - Alexandre dos Santos Rocha
-- Victor Nathan Pimenta
+- Victor Pimenta
 - Carolina Braga
 
-## Deploy do Projeto
+## Project Deployment
 
-Você pode acessar a versão ao vivo deste projeto [aqui](URL_DO_SEU_PROJETO).
+You can access the live version of this project [here](YOUR_PROJECT_URL).
 
-## Orientadora
+## Supervisor
 
-Este projeto foi orientado por Karen Okasaki.
+This project was supervised by Karen Okasaki.
